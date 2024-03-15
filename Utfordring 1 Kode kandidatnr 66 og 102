@@ -1,0 +1,151 @@
+library(tidyverse)
+library(ggplot2)
+
+# Figur 1
+rm(list = ls())
+
+k <- seq(0, 800, by = 1) 
+
+df1 <- data.frame(k)
+
+# Parametere (nivå på eksogene variabler)
+alpha <- 0.3
+s <- 0.07
+n <- 0.04
+A <- 50
+
+# Funksjon for investering per arbeider
+sy <- function(k) {
+  return(s * A * k^alpha)
+}
+
+# Funksjon for befolkningsvekst per arbeider
+nk <- function(k) {
+  return(n * k)
+}
+
+# Steady-state verdi for kapital
+ss_k <- (s * A / n)^(1 / (1 - alpha))
+
+# Steady-state verdi for arbeid
+ss_nk <- n * ss_k
+
+# Figur 1
+figur1 <- ggplot(df1, aes(x = k)) +
+  geom_line(aes(y = sy(k)), color = "blue", linetype = "solid") +
+  geom_line(aes(y = nk(k)), color = "red", linetype = "dashed") +
+  geom_vline(xintercept = ss_k, color = "green", linetype = "dotted") +
+  geom_hline(yintercept = ss_nk, color = "purple", linetype = "dotted") +
+  labs(x = "Kapital per arbeider", y = "Investering per arbeider / Befolkningsvekst per arbeider") +
+  ggtitle("Steady-state i Solow-modellen") +
+  theme_minimal()
+
+print(figur1)
+
+# Figur 2
+k <- seq(0, 800, by = 1) 
+
+df2 <- data.frame(k)
+
+# Parametere (nivå på eksogene variabler)
+alpha <- 0.3
+s0 <- 0.07
+s1 <- 0.08
+n <- 0.04
+A <- 50
+
+# Funksjon for investering per arbeider med s0
+s0y <- function(k) {
+  return(s0 * A * k^alpha)
+}
+
+# Funksjon for investering per arbeider med s1
+s1y <- function(k) {
+  return(s1 * A * k^alpha)
+}
+
+# Funksjon for befolkningsvekst per arbeider
+nk <- function(k) {
+  return(n * k)
+}
+
+# Steady-state verdi for kapital med s0
+ss0_k <- (s0 * A / n)^(1 / (1 - alpha))
+
+# Steady-state verdi for kapital med s1
+ss1_k <- (s1 * A / n)^(1 / (1 - alpha))
+
+# Steady-state verdi for befolkningsvekst med s0
+ss0_nk <- n * ss0_k
+
+# Steady-state verdi for befolkningsvekst med s1
+ss1_nk <- n * ss1_k
+
+# Figur 2
+figur2 <- ggplot(df2, aes(x = k)) +
+  geom_line(aes(y = s0y(k)), color = "blue", linetype = "solid") +
+  geom_line(aes(y = s1y(k)), color = "green", linetype = "solid") +
+  geom_line(aes(y = nk(k)), color = "red", linetype = "dashed") +
+  geom_vline(xintercept = ss0_k, color = "blue", linetype = "dotted") +
+  geom_vline(xintercept = ss1_k, color = "green", linetype = "dotted") +
+  geom_hline(yintercept = ss0_nk, color = "blue", linetype = "dotted") +
+  geom_hline(yintercept = ss1_nk, color = "green", linetype = "dotted") +
+  labs(x = "Kapital per arbeider", y = "Investering per arbeider / Befolkningsvekst per arbeider") +
+  ggtitle("Effekt av økning i spareraten på Solow-modellen") +
+  theme_minimal()
+
+print(figur2)
+
+# Figur 3 
+k <- seq(0, 800, by = 1) 
+
+df3 <- data.frame(k)
+
+# Parametere (nivå på eksogene variabler)
+alpha <- 0.3
+s <- 0.07
+n0 <- 0.04
+n1 <- 0.05
+A <- 50
+
+# Funksjon for investering per arbeider
+sy <- function(k) {
+  return(s * A * k^alpha)
+}
+
+# Funksjon for befolkningsvekst per arbeider med n0
+n0k <- function(k) {
+  return(n0 * k)
+}
+
+# Funksjon for befolkningsvekst per arbeider med n1
+n1k <- function(k) {
+  return(n1 * k)
+}
+
+# Steady-state verdi for kapital med n0
+ss0_k <- (s * A / n0)^(1 / (1 - alpha))
+
+# Steady-state verdi for kapital med n1
+ss1_k <- (s * A / n1)^(1 / (1 - alpha))
+
+# Steady-state verdi for befolkningsvekst med n0
+ss0_nk <- n0 * ss0_k
+
+# Steady-state verdi for befolkningsvekst med n1
+ss1_nk <- n1 * ss1_k
+
+# Plotting
+figur3 <- ggplot(df3, aes(x = k)) +
+  geom_line(aes(y = sy(k)), color = "blue", linetype = "solid") +
+  geom_line(aes(y = n0k(k)), color = "red", linetype = "solid") +
+  geom_line(aes(y = n1k(k)), color = "green", linetype = "solid") +
+  geom_vline(xintercept = ss0_k, color = "red", linetype = "dotted") +
+  geom_vline(xintercept = ss1_k, color = "green", linetype = "dotted") +
+  geom_hline(yintercept = ss0_nk, color = "red", linetype = "dotted") +
+  geom_hline(yintercept = ss1_nk, color = "green", linetype = "dotted") +
+  labs(x = "Kapital per arbeider", y = "Investering per arbeider / Befolkningsvekst per arbeider") +
+  ggtitle("Effekt av økning i befolkningsvekstraten på Solow-modellen") +
+  theme_minimal()
+
+print(figur3)
